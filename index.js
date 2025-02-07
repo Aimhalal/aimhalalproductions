@@ -131,12 +131,10 @@ import { updateMainTest } from "./controllers/prayerTime.js";
 
 app.post("/servertime", async (req, res) => {
   const { userId, latitude, longitude, fcmToken } = req.body;
-  return res
-    .status(200)
-    .json({
-      serverTime: new Date(),
-      PrayerTime: await updateMainTest(userId, latitude, longitude, fcmToken),
-    });
+  return res.status(200).json({
+    serverTime: new Date(),
+    PrayerTime: await updateMainTest(userId, latitude, longitude, fcmToken),
+  });
 });
 
 app.use("/update-location", PrayerTimeDone);
