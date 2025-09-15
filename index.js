@@ -32,13 +32,23 @@ import slugify from "slugify";
 
 dotenv.config();
 
-var PORT = process.env.PORT,
+var PORT = process.env.PORT || 3001,
   DB_URL = process.env.DB_URL;
 
 console.clear();
-mongoose.connect(DB_URL, (err, db) => {
-  if (err) console.error(err);
-  console.log("DB Connected Successfully");
+console.log("🔗 Connecting to Database...");
+console.log("📍 Database URL:", DB_URL ? DB_URL.replace(/\/\/.*@/, '//***:***@') : "Not set");
+console.log("🚀 Server Port:", PORT || "Not set");
+
+mongoose.connect(DB_URL, (err) => {
+  if (err) {
+    console.error("❌ Database Connection Error:", err.message);
+    return;
+  }
+  console.log("✅ DB Connected Successfully");
+  console.log("📊 Database Name:", mongoose.connection.name);
+  console.log("🌐 Database Host:", mongoose.connection.host);
+  console.log("🔌 Database Port:", mongoose.connection.port);
 });
 
 const app = express();
@@ -70,8 +80,8 @@ app.use("/api/rider", riderRoute);
 
 app.use("/domains", async (req, res) => {
   let domains = {
-    app: "http://167.99.49.197:3000",
-    orderSocket: "http://167.99.49.197:5401",
+    app: "http://167.99.49.197:3001",
+    orderSocket: "http://167.99.49.197:5404",
   };
   return res.json(domains);
 });

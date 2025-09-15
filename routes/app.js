@@ -43,6 +43,12 @@ router.get(
   store.getSingleStore
 );
 
+router.post(
+  "/store/:id/products",
+  authentication.verifyAuthToken,
+  store.getSingleStore
+);
+
 router.get(
   "/category/stores",
   authentication.verifyAuthToken,
